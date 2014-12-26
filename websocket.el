@@ -235,7 +235,7 @@ approximately 537M long."
   (if (= nbytes 8)
       (progn
         (let ((hi-32bits (lsh val -32))
-              (low-32bits (logand #xffffffff val)))
+              (low-32bits (lsh (lsh val 32) -32)))
           (when (or (> hi-32bits 0) (> (lsh low-32bits -29) 0))
             (signal 'websocket-frame-too-large val))
           (bindat-pack `((:val vec 2 u32))
